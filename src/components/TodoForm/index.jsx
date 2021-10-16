@@ -2,35 +2,36 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 TodoForm.propTypes = {
-    clickSubmitText: PropTypes.func.isRequired,
+   submitTodoList: PropTypes.func.isRequired,
 };
 
 
 function TodoForm(props) {
-    const {clickSubmitText} = props;
-    const [value, setValue] = useState('')
-function addText(e){
-        setValue(e.target.value);
-    }
-function submitForm(e){
-    e.preventDefault();
+   const {submitTodoList} = props;
+   const [value, setValue] = useState('');
 
-    if(!clickSubmitText) return;
-    const valueForm = {
-        title: value
+   function handleInputValue(e){
+       setValue(e.target.value)
+       console.log(e.target.value)
+   }
+    function handleSubmit(e){
+        e.preventDefault();
+        if(!submitTodoList) return;
+        const valueForm = {
+           title: value
+        }
+        submitTodoList(valueForm)
+        setValue('')
     }
-    clickSubmitText(valueForm);
-    setValue('')
-}
 
-    return(
-        <form onSubmit = {submitForm}>
-            <input
-                type = 'text' value = {value}
-                 onChange = {addText}
+   return(
+        <form onSubmit = {handleSubmit}>
+            <input 
+                value = {value}
+                onChange = {handleInputValue}
             />
         </form>
-    )
+   )
 }
 
 export default TodoForm;
